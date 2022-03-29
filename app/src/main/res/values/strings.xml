@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lista-Repositorios-GitHub-Bootcamp-Sportheca</string>
+    <string name="app_name_resume">App Repositories</string>
+    <string name="action_search">Pesquisar</string>
+</resources>
