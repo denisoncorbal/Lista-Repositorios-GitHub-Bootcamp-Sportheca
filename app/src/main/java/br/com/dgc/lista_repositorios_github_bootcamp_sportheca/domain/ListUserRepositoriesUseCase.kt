@@ -11,4 +11,7 @@ class ListUserRepositoriesUseCase (
     override suspend fun execute(param: String): Flow<List<Repo>> {
         return repository.listRepositories(param)
     }
+    override suspend fun execute(param: String, param2: Int): Flow<List<Repo>> {
+        return repository.listRepositoriesByFilter(param, param2)
+    }
 }

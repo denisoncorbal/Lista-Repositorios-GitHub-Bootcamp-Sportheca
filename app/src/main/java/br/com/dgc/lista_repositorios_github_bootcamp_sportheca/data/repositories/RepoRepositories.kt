@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepoRepositories {
     suspend fun listRepositories(user : String): Flow<List<Repo>>
+    suspend fun listRepositoriesByFilter(user : String, filter: Int): Flow<List<Repo>>
 }

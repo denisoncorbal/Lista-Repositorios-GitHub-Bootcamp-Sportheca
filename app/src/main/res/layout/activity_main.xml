@@ -14,6 +14,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name_resume" />
 
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rg_filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        >
+        <RadioButton android:id="@+id/filter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ordenar por nome"
+            />
+        <RadioButton android:id="@+id/filter_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ordenar por linguagem"
+            />
+    </RadioGroup>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_repos"
         android:layout_width="match_parent"
@@ -22,7 +41,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/rg_filters" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

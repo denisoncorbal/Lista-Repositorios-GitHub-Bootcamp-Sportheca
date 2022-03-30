@@ -11,6 +11,7 @@ import br.com.dgc.lista_repositorios_github_bootcamp_sportheca.databinding.ItemR
 import com.bumptech.glide.Glide
 
 class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallback()){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType : Int) : ViewHolder{
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemRepoBinding.inflate(inflater, parent, false)

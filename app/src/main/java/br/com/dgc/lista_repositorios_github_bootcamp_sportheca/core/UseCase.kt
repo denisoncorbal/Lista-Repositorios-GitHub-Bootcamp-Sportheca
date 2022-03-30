@@ -6,6 +6,8 @@ import java.lang.UnsupportedOperationException
 abstract class UseCase<Param, Source> {
     abstract suspend fun execute(param: Param): Flow<Source>
 
+    abstract suspend fun execute(param: Param, param2: Int): Flow<Source>
+
     open suspend operator fun invoke(param: Param) = execute(param)
 
     abstract class NoParam<Source> : UseCase<None, Flow<Source>>(){

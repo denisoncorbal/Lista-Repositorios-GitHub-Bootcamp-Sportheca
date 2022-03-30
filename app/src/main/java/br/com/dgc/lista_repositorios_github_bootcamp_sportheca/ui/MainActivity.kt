@@ -3,7 +3,8 @@ package br.com.dgc.lista_repositorios_github_bootcamp_sportheca.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import androidx.appcompat.app.AlertDialog
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import br.com.dgc.lista_repositorios_github_bootcamp_sportheca.R
@@ -13,6 +14,7 @@ import br.com.dgc.lista_repositorios_github_bootcamp_sportheca.core.hidesoftKeyb
 import br.com.dgc.lista_repositorios_github_bootcamp_sportheca.databinding.ActivityMainBinding
 import br.com.dgc.lista_repositorios_github_bootcamp_sportheca.presentation.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.getScopeId
 
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         viewModel.repos.observe(this){
             when(it){
-                MainViewModel.State.loading -> dialog.show()
+                MainViewModel.State.Loading -> dialog.show()
                 is MainViewModel.State.Error -> {
                     createDialog{
                         setMessage(it.error.message)
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 }
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,7 +65,14 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let{ viewModel.getRepoList(it) }
+        when(val filter = if (binding.filterName.isChecked) 1 else if (binding.filterLanguage.isChecked) 2 else 0){
+            1, 2 -> {
+                query?.let{ viewModel.getRepoListByFilter(it, filter)}
+            }
+            else -> {
+                query?.let{ viewModel.getRepoList(it) }
+            }
+        }
         binding.root.hidesoftKeyboard()
         return true
     }
@@ -71,6 +81,5 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         Log.e(TAG, "onQueryTextChange: $newText")
         return false
     }
-
 
 }

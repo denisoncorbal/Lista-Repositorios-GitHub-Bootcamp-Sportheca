@@ -23,7 +23,22 @@ class MainViewModel(
         viewModelScope.launch {
             listUserRepositoriesUseCase(user)
                 .onStart {
-                    _repo.postValue(State.loading)
+                    _repo.postValue(State.Loading)
+                }
+                .catch {
+                    _repo.postValue(State.Error(it))
+                }
+                .collect {
+                    _repo.postValue(State.Sucess(it))
+                }
+        }
+    }
+
+    fun getRepoListByFilter(user : String, filter: Int){
+        viewModelScope.launch {
+            listUserRepositoriesUseCase.execute(user, filter)
+                .onStart {
+                    _repo.postValue(State.Loading)
                 }
                 .catch {
                     _repo.postValue(State.Error(it))
@@ -35,7 +50,7 @@ class MainViewModel(
     }
 
     sealed class State{
-        object loading: State()
+        object Loading: State()
         data class Sucess(val list : List<Repo>) : State()
         data class Error(val error: Throwable) : State()
     }
